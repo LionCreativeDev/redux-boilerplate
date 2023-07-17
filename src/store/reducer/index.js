@@ -5,7 +5,7 @@ const INITIAL_STATE = {
 }
 
 const reducer = (state, action) => {
-    console.log("action in reducer: ", action);
+    //console.log("action in reducer: ", action);
     switch (action.type) {
         case "SETRECORDS":
             return ({

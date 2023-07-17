@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import SearchBox from './container/components/SearchBox';
 import Table from './container/components/Table';
@@ -10,19 +10,19 @@ import { setRecordsInStore } from "./store/action";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    fetchRecords();
-  }, []);
+    const fetchRecords = () => {
+      axios.get('https://jsonplaceholder.typicode.com/users').then(function (response) {
+        // handle success
+        if (response.data.length > 0)
+          dispatch(setRecordsInStore(response.data));
+      }).catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+    }
 
-  const fetchRecords = () => {
-    axios.get('https://jsonplaceholder.typicode.com/users').then(function (response) {
-      // handle success
-      if (response.data.length > 0)
-        dispatch(setRecordsInStore(response.data));
-    }).catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-  }
+    fetchRecords();
+  }, [dispatch]);
 
   return (
     <>
